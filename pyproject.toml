@@ -5,12 +5,108 @@ description = ""
 authors = ["prb270913 <pauloboff.mtm@gmail.com>"]
 readme = "README.md"
 
+
 [tool.poetry.dependencies]
 python = "^3.11"
-rdflib="^7.0.0"
+rdflib = ">=7.0.0,<7.1.0"
+pandas = ">=2.1.4,<2.2.0"
+openpyxl = ">=3.1.2,<3.2.0"
+inflection = ">=0.5.1,<0.6.0"
+jsonpath-ng = ">=1.6.1,<1.7.0"
+pyyaml = ">=6.0.1,<6.1.0"
+numpy = ">=1.26.3,<1.27.0"
+ruff = "^0.3.5"
+ruamel-yaml = "^0.18.6"
+isort = "^5.13.2"
+pre-commit = "^3.7.0"
 boto3="^1.34.68"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+[tool.ruff]
+line-length = 120
+indent-width = 4
+target-version = "py39"
+
+[tool.ruff.lint]
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+# https://docs.astral.sh/ruff/rules/
+select = [
+    "A",
+    "B",
+    "D", # pydocstyle
+    "E", # pycodestyle
+    "F", # Pyflakes
+    "G", # flake8-logging-format rules
+    "I", # Missing required import (auto-fixable)
+    "N", # pep8-naming
+    "Q",
+    "W",
+    "C4",
+    "C90",# mccabe
+    "UP", # Pyupgrade
+    "ANN",
+    "ARG",
+    "ASYNC", # subset of flake8-async rules
+    "ERA", # eradicate
+    "DTZ",
+    "ICN",
+    "ISC",  # Checks for implicit literal string concatenation (auto-fixable)
+    "LOG", # flake8-logging rules, most of them autofixable
+    "PIE",
+    "T20",
+    "TCH", # Rules around TYPE_CHECKING blocks
+    "TID25", # flake8-tidy-imports rules
+    "PD", # pandas-vet
+    "PT", # flake8-pytest-style rules
+    "RUF100", # Unused noqa (auto-fixable)
+]
+
+extend-select = ["I"]
+
+ignore = [
+    "D203", # Formatter does not align with linter and removes line
+    "D211", # `one-blank-line-before-class` (D203) and `no-blank-line-before-class` (D211) are incompatible
+    "D213", # multi-line-summary-first-line` (D212) and `multi-line-summary-second-line` (D213) are incompatible. Ignoring `multi-line-summary-second-line`.
+
+    # rules may cause conflicts when used with the formatter
+    "ISC001",
+    "ISC002",
+    "D206",
+    "D300",
+    "E111",
+    "E114",
+    "E117",
+    "Q000",
+    "Q001",
+    "Q002",
+    "Q003",
+    "COM812",
+    "COM819",
+    "W191",
+    "D100",
+    "D200",
+    "ANN101", # Derived from the flake8-annotations linter. Warning: This rule is deprecated and will be removed in a future release.
+    "C901", # function/mewthod is too complex
+    "B007", # Loop control variable not used within loop body
+    "W291", # Trailing whitespace, spaces or tabs after keywords, operators, numbers, etc.
+]
+
+[tool.ruff.lint.per-file-ignores]
+"**/test_*.py" = ["D"]
+"**/TERRAFORM_CONSTANTS_*.py" = ["N999"] #Files are rendered by Terraform and should be distinguishable from other files.
+
+
+[tool.ruff.lint.mccabe]
+max-complexity = 5
+
+
+[tool.ruff.format]
+quote-style = "double"
+docstring-code-format = true
+
+
+
